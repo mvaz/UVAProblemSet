@@ -4,6 +4,7 @@ using namespace std;
 
 
 int *memory;
+int *sieve;
 
 int is_even(int n) {
     return !(n & 1);
@@ -23,34 +24,42 @@ int cycle_length( int n ) {
 		else
 			n = 3 * n + 1;
 		l++;
-		// printf(" %d", n);
 	}
 	return l;
 }
 
+int next( int n ) {
+	return is_even(n) ? divide_by_two(n) : (3*n+1);
+}
+
+int cycleLengthMemory( int n, int top ) {
+	int k = 0;
+	while ( n > top ) {
+		n = next(n);
+		k = k + 1;
+	}
+	if(sieve[n] == 0)
+		sieve[n] = 1 + cycleLengthMemory( next(n), top );
+
+	return k + sieve[n];
+}
 
 int main()
 {
 
-	int i = 1;
-	int j = 1e6;
+	int i = 100;
+	int j = 2000;
 	
-	// cin >> i;
-	// cin >> j;
+	sieve  = (int*) calloc( j+1, sizeof(int));
+	sieve[1] = 1;
 
-	// memory = new int[j-i+1];
-	memory = (int*) calloc( j - i + 1, sizeof(int));
-	// exit(0);
 	int max = 0;
 
 	for(int n = i; n <= j; ++n)
 	{
-		// printf(	":%d: ", n );
-		memory[n - i] = cycle_length(n);
-		
-		if( memory[n-i] > max )
-			max = memory[n-i];
-		// printf(" -->%d<\n", memory[n-i] );
+		sieve[n] = cycleLengthMemory(n, j);
+		if( sieve[n] > max )
+			max = sieve[n];
 	}
 
 	cout << i << " " << j << " " << max;
