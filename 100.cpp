@@ -1,9 +1,9 @@
 #include <iostream>
 #include <cstdlib>
+#include <vector>
 using namespace std;
 
 
-int *memory;
 int *sieve;
 
 int is_even(int n) {
@@ -44,26 +44,47 @@ int cycleLengthMemory( int n, int top ) {
 	return k + sieve[n];
 }
 
-int main()
-{
 
-	int i = 100;
-	int j = 2000;
-	
-	sieve  = (int*) calloc( j+1, sizeof(int));
-	sieve[1] = 1;
 
+int determineMaxCycleLength( int i, int j, int top ) {
 	int max = 0;
 
-	for(int n = i; n <= j; ++n)
-	{
-		sieve[n] = cycleLengthMemory(n, j);
+	for(int n = i; n <= j; ++n) {
+		
+		sieve[n] = cycleLengthMemory(n, top);
+		
 		if( sieve[n] > max )
 			max = sieve[n];
 	}
+	return max;
+}
 
+
+int main() {
+
+	// get the pairs of integers from the input
+	// istream is;
+	char line[256];
+	string my_line;
+	
+	vector<int> pairs;
+		
+	while (getline(cin,my_line,'\n')) {
+		cout << my_line;
+	}
+	
+	
+	int i = 100;
+	int j = 2000;
+	
+	// TODO allocate the auxiliary sieve
+	sieve = (int*) calloc( j+1, sizeof(int));
+	sieve[1] = 1;
+
+    // TODO for each pair, compute the sieve
+	int max = determineMaxCycleLength( i, j, j);
 	cout << i << " " << j << " " << max;
 
-	delete memory;
+
 	exit(0);
 }
