@@ -75,7 +75,7 @@ int main() {
 		// is command invalid? the ignore it
 		if ( x1 == x2 )
 			continue;
-		table.pile_over( x1, x2)
+		table.pile_over( x1, x2);
 		// cout << com1 << ":" << x1;
 	}
 
