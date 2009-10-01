@@ -5,6 +5,29 @@
 using namespace std;
 
 
+class Table {
+	
+public:
+	Table(int numberOfBins);
+	
+	~Table();
+	
+	void move_onto( int block1, int block2 );
+	void move_over( int block1, int block2 );
+    void pile_onto( int block1, int block2 );
+    void pile_over( int block1, int block2 );
+
+protected:
+	list<int> *configuration;
+
+};
+
+
+void pile_over( int block1, int block2 )
+{
+	return;
+}
+
 int main() {
 	
 	// read the first line
@@ -42,8 +65,6 @@ int main() {
 		}
 		cout << "\n";
     }
-
-    list<int>::iterator i;
 
 	exit(0);
 }
