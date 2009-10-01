@@ -5,28 +5,47 @@
 using namespace std;
 
 
-class Table {
-	
-public:
-	Table(int numberOfBins);
-	
-	~Table();
-	
-	void move_onto( int block1, int block2 );
-	void move_over( int block1, int block2 );
-    void pile_onto( int block1, int block2 );
-    void pile_over( int block1, int block2 );
+// class Brett {
+// 	
+// public:
+// 	Brett(size_t);
+// 	
+// 	~Brett();
+// 	
+// 	void init(size_t numberOfBins);
+// 	void move_onto( int block1, int block2 );
+// 	void move_over( int block1, int block2 );
+//     void pile_onto( int block1, int block2 );
+//     void pile_over( int block1, int block2 );
+// 
+// protected:
+// 	list<int> *config;
+// };
+// 
+// 
+// void Brett::pile_over( int block1, int block2 )
+// {
+// 	return;
+// }
+// 
+// 
+// Brett::Brett(size_t numberOfBins){
+// // 	config = (list<int>*) NULL;
+// // }
+// // 
+// // Brett::init(size_t numberOfBins)
+// // {
+// 	config = (list<int>*) calloc( numberOfBins, sizeof(list<int>*) );
+// }
 
-protected:
-	list<int> *configuration;
-
-};
 
 
-void pile_over( int block1, int block2 )
+void pile_over( list<int> *config, int block1, int block2)
 {
-	return;
+	// locate block1
+	// locate block2
 }
+
 
 int main() {
 	
@@ -37,11 +56,14 @@ int main() {
 	// create the lists
 	list<int> listArray[numberOfBins];
 	
+	
 	// initialize them
 	for(size_t i = 0; i < numberOfBins; ++i)
 	{
 		listArray[i].push_back(i);
 	}
+	
+	// Brett t = new Brett( (size_t) numberOfBins );
 	
 	// read each command and parse it
 	char com1[5], com2[5];
@@ -50,8 +72,12 @@ int main() {
 		// is command invalid? the ignore it
 		if ( x1 == x2 )
 			continue;
+		
+		
 		// cout << com1 << ":" << x1;
+		pile_over( listArray, x1, x2);
 	}
+
 
     // print the lists
     for(size_t i = 0; i < numberOfBins; ++i)
