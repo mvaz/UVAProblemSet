@@ -37,14 +37,13 @@ public:
 	// void move_onto( int block1, int block2 );
 	// void move_over( int block1, int block2 );
 	// void pile_onto( int block1, int block2 );
-    void pile_over( int block1, int block2 ) {
+	    void pile_over( int block1, int block2 ) {
 		// find block1
 		
 		// find block2
 		
 		
 	}
-};
 
 private:
 	list<int> *config;
