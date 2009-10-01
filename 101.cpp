@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <list>
+#include <vector>
 
 using namespace std;
 
@@ -10,18 +11,17 @@ class Table {
 public:
 	
 	Table(int numberOfBins)
-	:config(), numberOfBins( numberOfBins )
+	:config(numberOfBins), numberOfBins( numberOfBins ), positions(numberOfBins)
 	{
-		// this->numberOfBins = numberOfBins;
-		this->config = new list<int>[numberOfBins];
-		for(size_t i = 0; i < numberOfBins; ++i)
+		for(size_t i = 0; i < this->numberOfBins; ++i) {
 			config[i].push_back(i);
+			positions[i] = i;
+		}
 	}
 	
 	void print()
 	{
-		// print the lists
-	    for(size_t i = 0; i < numberOfBins; ++i)
+	    for(size_t i = 0; i < this->numberOfBins; ++i)
 	    {
 			cout << i << ":";
 			list<int>::iterator it = config[i].begin();
@@ -32,22 +32,28 @@ public:
 			}
 			cout << "\n";
 	    }
-	    
 	}
 	// void move_onto( int block1, int block2 );
 	// void move_over( int block1, int block2 );
 	// void pile_onto( int block1, int block2 );
-	    void pile_over( int block1, int block2 ) {
+    void pile_over( int block1, int block2 ) {
 		// find block1
 		
 		// find block2
-		
-		
 	}
 
 private:
-	list<int> *config;
+	// list<int> *config;
 	int numberOfBins;
+
+	vector< list<int> > config;
+	vector<int> positions;
+
+
+	void push( int block, int position) {
+		config[position].push_back(block);
+	}
+
 
 };
 
