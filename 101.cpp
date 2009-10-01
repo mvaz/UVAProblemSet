@@ -35,12 +35,19 @@ int main() {
     for(size_t i = 0; i < numberOfBins; ++i)
     {
 		cout << i << ":";
-		// for(size_t j = 0; j < listArray[i]; ++i)
-		// {
-			/* code */
-		// }
+		for (i = listArray.begin(); i < listArray.end(); ++i)
+		{
+			cout << i << ":";
+			if (! i->passed())    // iterators also provide operator ->
+			{
+				cout << "The student " << *i << " failed." << endl;
+				 // provided that class Student provides the overloaded
+				 // stream insertion operator <<
+			}
+		}
     }
 
+    list<int>::iterator i;
 
 	exit(0);
 }
