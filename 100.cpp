@@ -13,15 +13,6 @@ using namespace std;
 
 int *sieve;
 
-// int is_even(int n) {
-//     return !(n & 1);
-// }
-// 
-// int divide_by_two(int n) {
-//     return n >> 1;
-// }
-// 
-// 
 // int cycle_length( int n ) {
 // 	int l = 1;
 // 	while(n!=1)
@@ -33,10 +24,6 @@ int *sieve;
 // 		l++;
 // 	}
 // 	return l;
-// }
-// 
-// int next( int n ) {
-// 	return is_even(n) ? divide_by_two(n) : (3*n+1);
 // }
 
 int cycleLengthMemory( int n, int top ) {

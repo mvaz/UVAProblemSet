@@ -27,24 +27,20 @@ int main() {
 		// is command invalid? the ignore it
 		if ( x1 == x2 )
 			continue;
-
-		cout << com1 << ":" << x1;
+		// cout << com1 << ":" << x1;
 	}
 
     // print the lists
     for(size_t i = 0; i < numberOfBins; ++i)
     {
 		cout << i << ":";
-		for (i = listArray.begin(); i < listArray.end(); ++i)
+		list<int>::iterator it = listArray[i].begin();
+		while (it != listArray[i].end())
 		{
-			cout << i << ":";
-			if (! i->passed())    // iterators also provide operator ->
-			{
-				cout << "The student " << *i << " failed." << endl;
-				 // provided that class Student provides the overloaded
-				 // stream insertion operator <<
-			}
+			cout << " " << *it;
+			++it;
 		}
+		cout << "\n";
     }
 
     list<int>::iterator i;
