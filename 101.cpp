@@ -42,7 +42,7 @@ public:
 		int p1 = positions[block1];
 		int p2 = positions[block2];
 		int elem;
-				
+
 		// relocate all blocks on top of p2		
 		list<int>::iterator it = config[p2].begin();
 		do {
@@ -82,20 +82,25 @@ public:
 	
 	void command( string com1, int block1, string com2, int block2 )
 	{
+		// cout << com1 << " " << block1 << " " << com2 << " " << block2 << endl;
 		// test whether command is worth executing
 		if ( positions[block1] == positions[block2] )
 			return;
 		
 		if (com1 == "pile")
+		{
 			if( com2 == "onto")
 				pile_onto(block1,block2);
 			else if ( com2 == "over" )
 				pile_over(block1,block2);
+		}	
 		else if ( com1 == "move" )
+		{
 			if( com2 == "onto")
 				pile_onto(block1,block2);
 			else if ( com2 == "over" )
 				pile_over(block1,block2);
+		}
 	}
 
 private:
@@ -105,12 +110,6 @@ private:
 	vector< list<int> > config;
 	vector<int> positions;
 	stack<int>  buffer;
-
-
-	void push( int block, int position) {
-		config[position].push_back(block);
-	}
-
 
 };
 
@@ -139,12 +138,12 @@ int main() {
 			continue;
 		// table.pile_over( x1, x2);
 		table.command( string(com1,4), x1, string(com2,4), x2);
-		table.print();
 		
 		// cout << com1 << ":" << x1;
 	}
 
 	// print the lists
+	table.print();
 
 	exit(0);
 }
