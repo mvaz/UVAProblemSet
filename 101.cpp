@@ -34,10 +34,25 @@ public:
 			cout << "\n";
 		}
 		// 
-		for (size_t i=0; i< positions.size(); cout << " " << positions[i++]);
+		// for (size_t i=0; i< positions.size(); cout << " " << positions[i++]);
 	}
-	// void move_onto( int block1, int block2 );
-	// void move_over( int block1, int block2 );
+	
+    void move_onto( int block1, int block2 ) {
+		int p1 = positions[block1];
+		int p2 = positions[block2];
+		int elem;
+
+		// relocate all blocks on top of p2		
+		while ( (elem = config[p2].back()) != block2 ) {
+			config[p2].pop_back();
+			config[elem].push_back(elem);
+			positions[elem] = elem;			
+		}
+		
+		// move blocks on top of block1 to pile of block2
+		move_over( block1, block2 );
+	}
+	
 	void pile_onto( int block1, int block2 ) {
 		int p1 = positions[block1];
 		int p2 = positions[block2];
@@ -53,6 +68,24 @@ public:
 		// move blocks on top of block1 to pile of block2
 		pile_over( block1, block2 );
 
+	}
+
+	void move_over( int block1, int block2 ) {
+		int p1 = positions[block1];
+		int p2 = positions[block2];
+		int elem;
+		
+		// relocate all blocks on top of p1
+		while ( (elem = config[p1].back()) != block1 ) {
+			config[p1].pop_back();
+			config[elem].push_back(elem);
+			positions[elem] = elem;			
+		}
+		
+		config[p1].pop_back();
+		config[p2].push_back(elem);
+		positions[elem] = p2;
+		
 	}
 	
 	void pile_over( int block1, int block2 ) {
@@ -94,9 +127,9 @@ public:
 		else if ( com1 == "move" )
 		{
 			if( com2 == "onto")
-				pile_onto(block1,block2);
+				move_onto(block1,block2);
 			else if ( com2 == "over" )
-				pile_over(block1,block2);
+				move_over(block1,block2);
 		}
 	}
 
@@ -130,13 +163,7 @@ int main() {
 	char com1[255], com2[255];
 	int x1, x2;
 	while( scanf( "%s %d %s %d\n", com1, &x1, com2, &x2) == 4) {
-		// is command invalid? the ignore it
-		if ( x1 == x2 )
-			continue;
-		// table.pile_over( x1, x2);
 		table.command( string(com1,4), x1, string(com2,4), x2);
-		
-		// cout << com1 << ":" << x1;
 	}
 
 	// print the lists
