@@ -38,22 +38,49 @@ public:
 	}
 	// void move_onto( int block1, int block2 );
 	// void move_over( int block1, int block2 );
-	// void pile_onto( int block1, int block2 );
+	void pile_onto( int block1, int block2 ) {
+		int p1 = positions[block1];
+		int p2 = positions[block2];
+		int elem;
+		
+		if ( p1 == p2 )
+			return;
+		
+		// relocate all blocks on top of p2
+		stack<int> relocate;
+		
+		list<int>::iterator it = config[p2].begin();
+		do {
+			elem = config[p2].back();
+			config[p2].pop_back();
+			relocate.push(elem);
+			++it;
+		} while ( elem != block2 );
+		
+		// move blocks on top of block1 to pile of block2
+		pile_over( block1, block2 );
+
+	}
+	
 	void pile_over( int block1, int block2 ) {
 		int p1 = positions[block1];
 		int p2 = positions[block2];
+		int elem;
+		
+		if ( p1 == p2 )
+			return;
 		
 		//
 		list<int>::iterator it = config[p1].begin();
 		do {
-			int elem = config[p1].back();
+			elem = config[p1].back();
 			config[p1].pop_back();
 			buffer.push(elem);
 			++it;
-		} while ( *it != p1 && it != config[p1].end() );
+		} while ( elem != block1 );
 
 		while ( !buffer.empty() ) {
-			int elem = buffer.top();
+			elem = buffer.top();
 			buffer.pop();
 			config[p2].push_back(elem);
 			positions[elem] = p2;
@@ -100,11 +127,12 @@ int main() {
 		if ( x1 == x2 )
 			continue;
 		table.pile_over( x1, x2);
+		table.print();
+		
 		// cout << com1 << ":" << x1;
 	}
 
 	// print the lists
-	table.print();
 
 	exit(0);
 }
