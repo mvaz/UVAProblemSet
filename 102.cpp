@@ -1,7 +1,8 @@
 #include <iostream>
 #include <sstream>
 #include <cstdlib>
-#include <vector>
+#include <set>
+#include <list>
 
 using namespace std;
 
@@ -22,6 +23,10 @@ int cost( int *bin, int COLOUR)
 	return cost;
 }
 
+int L( list<int> a, set<int> s)
+{
+	
+}
 
 int main() {
 
