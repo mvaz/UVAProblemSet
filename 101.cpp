@@ -42,18 +42,14 @@ public:
 		int p1 = positions[block1];
 		int p2 = positions[block2];
 		int elem;
-		
-		if ( p1 == p2 )
-			return;
-		
-		// relocate all blocks on top of p2
-		stack<int> relocate;
-		
+				
+		// relocate all blocks on top of p2		
 		list<int>::iterator it = config[p2].begin();
 		do {
 			elem = config[p2].back();
+			config[elem].push_back(elem);
 			config[p2].pop_back();
-			relocate.push(elem);
+			positions[elem] = p2;
 			++it;
 		} while ( elem != block2 );
 		
@@ -66,9 +62,6 @@ public:
 		int p1 = positions[block1];
 		int p2 = positions[block2];
 		int elem;
-		
-		if ( p1 == p2 )
-			return;
 		
 		//
 		list<int>::iterator it = config[p1].begin();
@@ -85,6 +78,24 @@ public:
 			config[p2].push_back(elem);
 			positions[elem] = p2;
 		}
+	}
+	
+	void command( string com1, int block1, string com2, int block2 )
+	{
+		// test whether command is worth executing
+		if ( positions[block1] == positions[block2] )
+			return;
+		
+		if (com1 == "pile")
+			if( com2 == "onto")
+				pile_onto(block1,block2);
+			else if ( com2 == "over" )
+				pile_over(block1,block2);
+		else if ( com1 == "move" )
+			if( com2 == "onto")
+				pile_onto(block1,block2);
+			else if ( com2 == "over" )
+				pile_over(block1,block2);
 	}
 
 private:
@@ -120,13 +131,14 @@ int main() {
 	Table table( numberOfBins );
 	
 	// read each command and parse it
-	char com1[5], com2[5];
+	char com1[255], com2[255];
 	int x1, x2;
 	while( scanf( "%s %d %s %d\n", com1, &x1, com2, &x2) == 4) {
 		// is command invalid? the ignore it
 		if ( x1 == x2 )
 			continue;
-		table.pile_over( x1, x2);
+		// table.pile_over( x1, x2);
+		table.command( string(com1,4), x1, string(com2,4), x2);
 		table.print();
 		
 		// cout << com1 << ":" << x1;
