@@ -44,14 +44,11 @@ public:
 		int elem;
 
 		// relocate all blocks on top of p2		
-		list<int>::iterator it = config[p2].begin();
-		do {
-			elem = config[p2].back();
-			config[elem].push_back(elem);
+		while ( (elem = config[p2].back()) != block2 ) {
 			config[p2].pop_back();
-			positions[elem] = p2;
-			++it;
-		} while ( elem != block2 );
+			config[elem].push_back(elem);
+			positions[elem] = elem;			
+		}
 		
 		// move blocks on top of block1 to pile of block2
 		pile_over( block1, block2 );
