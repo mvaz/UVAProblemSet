@@ -49,6 +49,7 @@ inline void PRINT_ELEMENTS (const T& coll, const char* optcstr="")
 //
 int S( list<int> &A, set<int> &B, list<int> &result)
 {
+	// special case where it is a single set
 	if (A.size() == 1)
 	{
 		int x = A.front();
@@ -81,7 +82,6 @@ int S( list<int> &A, set<int> &B, list<int> &result)
 		int cost = costMatrix[x][y] + S( tailA, restB, underResult);
 		
 		// PRINT_ELEMENTS(  underResult, "underResult:  ");
-		
 		if (cost < q)
 		{
 			q = cost;
@@ -89,8 +89,7 @@ int S( list<int> &A, set<int> &B, list<int> &result)
 			underResult.push_front(y);
 			tmp = underResult;
 		}
-		
-		// PRINT_ELEMENTS(  underResult, "tmp        :  ");
+		PRINT_ELEMENTS(  underResult, "tmp        :  ");
 	}
 
 	result = tmp;
@@ -100,11 +99,12 @@ int S( list<int> &A, set<int> &B, list<int> &result)
 //
 int main(int argc, char const *argv[])
 {
-	// istream is;
 	int configMatrix[NUMBER_COLOURS][NUMBER_COLOURS];
 	
+	// for starting the algorithm
 	set<int> colours;
 	list<int> listOfBins;
+	// vector for output
 	char names[4] = "BGC";
 	
 	for ( int i=0; i < NUMBER_COLOURS; i++ )
@@ -123,10 +123,10 @@ int main(int argc, char const *argv[])
 		fillCostMatrix( configMatrix, costMatrix);
 		// 2. call the algorithm
 		int cost = S( listOfBins, colours, solution);
-	  // 3. print the solution
+		// 3. print the solution
 		for (list<int>::iterator col = solution.begin(); col!=solution.end(); ++col)
 		{
-			cout << names[*col];
+			cout << names[*col] << " " << *col << " ";
 		}
 		cout << cost << endl;
 		// PRINT_ELEMENTS(  solution, "solution   :  ");
@@ -134,32 +134,3 @@ int main(int argc, char const *argv[])
 
 	exit(0);
 }
-
-
-//
-// int L( list<int> a, set<int> s)
-// {
-// 	if(s.empty)
-// 		return 0;
-// 	else {
-// 		// for every element in set s
-// 	    
-// 		for( set<int>::iterator iter = s.begin();  iter != s.end(); ++iter )
-// 		{
-// 			*iter
-// 			s2 = 
-// 		}
-// 	}
-// 		
-// }
-
-// int cost( int *bin, int COLOUR)
-// {
-// 	int cost = 0;
-// 	for(size_t i = 0; i < NUMBER_COLOURS; ++i)
-// 	{
-// 		if ( i == COLOUR )
-// 			cost += bin[i];
-// 	}
-// 	return cost;
-// }
