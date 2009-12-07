@@ -20,6 +20,16 @@ int gcd(int getal1, int getal2)
 		return gcd(getal2, getal1 % getal2);
 }
 
+
+void computeTriplets(int N)
+{
+	for(size_t m = 0; m < N/2; ++m)
+	{
+		m2 = 
+	}
+}
+
+
 int main (int argc, char const *argv[])
 {
 	int N;
