@@ -19,14 +19,26 @@ private:
 	int graph[30][30];
 	int tmp_graph[30][30];
 	void initGraph() {
-		for (int i=1 ; i < this->ne ; i++)
-			for (int j=1 ; j < this->ne ; j++)
+		for (int i=0 ; i < this->ne ; i++)
+			for (int j=0 ; j < this->ne ; j++)
 				graph[i][j] = 0;
 	}
 	void fillTmpGraph() {
-		for (int i=1 ; i < this->ne ; i++)
-			for (int j=1 ; j < this->ne ; j++)
+		for (int i=0 ; i < this->ne ; i++)
+			for (int j=0 ; j < this->ne ; j++)
 				tmp_graph[i][j] = graph[i][j];		
+	}
+	
+	bool nodeHasIncomingEdges(int node)
+	{
+		bool hasIncomingEdges = false;
+		
+		for (int i = 0; i < this->ne ; i++)
+			if (this->tmp_graph[i][node]) {
+				hasIncomingEdges = true ;
+				break;
+			}
+		return hasIncomingEdges;
 	}
 public:
 	MyGraph() {
@@ -69,6 +81,9 @@ public:
 	}
 	
 	vector<int> topologicalSort() {
+		
+		this->fillTmpGraph();
+		
 		// L ← Empty list that will contain the sorted elements
 		vector<int> L;
 
@@ -76,20 +91,11 @@ public:
 		vector<int> S;
 		
 		for (int j = 0; j < this->ne ; j++)
-		{
-			bool hasIncomingEdges = false;
-			
-			for (int i = 0; i < this->ne ; i++)
-				if (this->graph[i][j]) {
-					hasIncomingEdges = true ;
-					break;
-				}
-			
-			if ( not hasIncomingEdges )
+		{			
+			if ( not this->nodeHasIncomingEdges(j) )
 				S.push_back( j );
 		}
 
-		this->fillTmpGraph();
 
 		// while S is non-empty do		
 		while (S.size() > 0)
@@ -106,18 +112,19 @@ public:
 			{
 				if (!tmp_graph[n][m])
 					continue;
-				
 				// remove edge e from the graph
-				//         if m has no other incoming edges then
-				//             insert m into S
-				// if graph has edges then
-				//     output error message (graph has at least one cycle)
-				// else 
-				//     output message (proposed topologically sorted order: L)	
+				tmp_graph[n][m] = 0;
+				//    if m has no other incoming edges then
+				//        insert m into S
+				if ( not this->nodeHasIncomingEdges(m) )
+					S.push_back(m);
+				
 			}
 		}
-
-		
+		// if graph has edges then
+		//     output error message (graph has at least one cycle)
+		// else 
+		//     output message (proposed topologically sorted order: L)	
 		return L;
 	}
 };
@@ -192,7 +199,7 @@ int main (int argc, char const *argv[])
 		cout << longestPath.size() << endl;
 		for (int z = 0; z < longestPath.size(); z++ )
 		{
-			cout << longestPath[z];
+			cout << longestPath[z] + 1;
 			if ( (z+1) < longestPath.size() )
 				cout << " ";
 			else
