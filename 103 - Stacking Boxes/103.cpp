@@ -68,32 +68,41 @@ public:
 	vector<int> longestPath() {
 		
 		vector<int> sorted = this->topologicalSort();
-		vector<int> path = sorted;
-		// //     length_to = array with |V(G)| elements of type int with default value 0
+		vector< vector<int> > path_to(this->ne);
+		for (int i = 0; i < this->ne; ++i)
+			path_to[i].push_back(i);
+		
+		//   length_to = array with |V(G)| elements of type int with default value 0
 		vector<int> length_to(this->ne, 0);
-		// // 
-		// //     for each vertex v in topOrder(G) do
+		//   for each vertex v in topOrder(G) do
 		for (vector<int>::iterator it = sorted.begin(); it != sorted.end(); ++it)
 		{
-		// 	//         for each edge (v, w) in E(G) do
+			//   for each edge (v, w) in E(G) do
 			int v = *it;
 			for (int w = 0; w < this->ne ; w++)
-		// 		//             if length_to[w] <= length_to[v] + weight(G,(v,w)) then
-		// 		//                 length_to[w] = length_to[v] + weight(G, (v,w))
+				//             if length_to[w] <= length_to[v] + weight(G,(v,w)) then
+				//                 length_to[w] = length_to[v] + weight(G, (v,w))
 				if ( graph[v][w] )
 					if (length_to[w] <= length_to[v] + 1)
 					{
-						length_to[v] += 1;
-						cout << length_to[v] << " ";
-					}
-		// 			
+						length_to[w] = length_to[v] + 1;
+						path_to[w].assign( path_to[v].begin(), path_to[v].end());
+						path_to[w].push_back(w);
+					}	
 		}
-		// 
-		// // for (vector<int>::iterator it = length_to.begin(); it != length_to.end(); ++it)
-		// // 	cout << *it << " ";
-		// //     return max(length_to[v] for v in V(G))	
-		// path = sorted;
-		return path;
+		
+		// determine the longest path
+		int idx = 0;
+		for (int x = 0, max = 0; x < this->ne ; x++)
+		{
+			int oinc = length_to[x];
+			if ( oinc > max) {
+				max = oinc;
+				idx = x;
+			}
+		}
+		//    return max(length_to[v] for v in V(G))	
+		return path_to[idx];
 		
 	}
 	
@@ -161,17 +170,7 @@ bool fits( vector<int> first, vector<int> second )
 
 
 int main (int argc, char const *argv[])
-{
-	// int arr1[3] = {1, 5, 2};
-	// int arr2[3] = {4, 5, 6};
-	// vector<int> x( arr1, arr1 + 3);
-	// sort( x.begin(), x.end() );
-	// 
-	// vector<int> y( arr2, arr2 + 3);
-	// sort( y.begin(), y.end() );
-	// 
-	// cout << (fits( x, y ) ? "fits" : "no fit") << endl;// = {2, 3, 4};
-	
+{	
 	int n; // dimensionality of the boxes
 	int k; // number of boxes
 
@@ -183,12 +182,8 @@ int main (int argc, char const *argv[])
 		// vector< vector<int> > vectors;
 		// read each box
 		for ( int i = 0 ; i < k ; i++ )
-		{
 			for (int j = 0; j < n ; j++)
 				scanf("%d", &boxes[i][j]);
-				
-			// vector<int> v1(boxes[i], boxes[i] + n);
-		}
 
 		// populate the graph
 		for (int i=0 ; i < k ; i++)
@@ -207,15 +202,13 @@ int main (int argc, char const *argv[])
 			}
 		}
 		
-		g.print();
+		// g.print();
 		// compute the longest path
 		vector<int> longestPath = g.longestPath();
-		cout << endl;
-		// compute the length of the longest path
-		
-		// output it
+
+		// compute the length of the longest path and output it
 		cout << longestPath.size() << endl;
-		for (int z = 0; z < longestPath.size(); z++ )
+		for (size_t z = 0; z < longestPath.size(); z++ )
 		{
 			cout << longestPath[z] + 1;
 			if ( (z+1) < longestPath.size() )
@@ -223,45 +216,7 @@ int main (int argc, char const *argv[])
 			else
 				cout << endl;
 		}
-			
- 		// printf( "%d\n")
 	}
 
-
-	// fin.getline(buffer, BUFFER_SIZE);
-	// 
-	// while (strbuffer >> values1[c])
-	// {
-	// 	ostr2 >> values2[c++];
-	// }
-	// 
-	// for (int i=0;i<c;i++)
-	// {
-	// 	cout << values1[i] << ":" << values2[i] << endl;
-	// }
-
-	
 	return 0;
 }
-// 
-// int main() {
-// 
-// 	// istream is;
-// 	int k, n;
-// 	
-// 	// get the pairs of integers
-// 	while( scanf("%d %d\n", &k, &n) == 2 )
-// 	{
-// 		for(size_t i = 0; i < k; ++i)
-// 		{
-// 			// read line
-// 			for(size_t i = 0; i < n; ++i)
-// 			{
-// 
-// 			}
-// 			
-// 		}
-// 	}
-// 
-// 	exit(0);
-// }
