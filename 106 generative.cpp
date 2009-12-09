@@ -20,6 +20,7 @@ int gcd(int getal1, int getal2)
 }
 
 
+int myints[1000002];
 
 int main (int argc, char const *argv[])
 {
@@ -28,7 +29,7 @@ int main (int argc, char const *argv[])
 
 	while(scanf("%d\n", &N) == 1 )
 	{
-		int myints[N+1];
+		// int myints[N+1];
 		for(size_t i = 0; i < N+1; ++i)
 		{
 			myints[i] = 0;
@@ -74,11 +75,6 @@ int main (int argc, char const *argv[])
 						involved++;
 					}
 						
-						
-						
-					// involved.insert( ak );
-					// involved.insert( bk );				
-					// involved.insert( ck );
 					ak += a + a;
 					bk += b + b;
 					ck += c + c;
@@ -86,9 +82,7 @@ int main (int argc, char const *argv[])
 			}
 
 		}
-		// cout << primitives << " " <<  << endl;
 		printf("%d %d\n", primitives, N - involved ); //( N - involved.size() ));
-		// printf("%d %d\n", primitives, ( N - involved.size() ));
 	}
 			
 	return 0;
