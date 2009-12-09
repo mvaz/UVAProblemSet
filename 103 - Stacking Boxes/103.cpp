@@ -67,17 +67,34 @@ public:
 	//          Length of the longest path
 	vector<int> longestPath() {
 		
-		vector<int> path = this->topologicalSort();
+		vector<int> sorted = this->topologicalSort();
+		vector<int> path = sorted;
+		// //     length_to = array with |V(G)| elements of type int with default value 0
+		vector<int> length_to(this->ne, 0);
+		// // 
+		// //     for each vertex v in topOrder(G) do
+		for (vector<int>::iterator it = sorted.begin(); it != sorted.end(); ++it)
+		{
+		// 	//         for each edge (v, w) in E(G) do
+			int v = *it;
+			for (int w = 0; w < this->ne ; w++)
+		// 		//             if length_to[w] <= length_to[v] + weight(G,(v,w)) then
+		// 		//                 length_to[w] = length_to[v] + weight(G, (v,w))
+				if ( graph[v][w] )
+					if (length_to[w] <= length_to[v] + 1)
+					{
+						length_to[v] += 1;
+						cout << length_to[v] << " ";
+					}
+		// 			
+		}
 		// 
-		//     length_to = array with |V(G)| elements of type int with default value 0
-		// 
-		//     for each vertex v in topOrder(G) do
-		//         for each edge (v, w) in E(G) do
-		//             if length_to[w] <= length_to[v] + weight(G,(v,w)) then
-		//                 length_to[w] = length_to[v] + weight(G, (v,w))
-		// 
-		//     return max(length_to[v] for v in V(G))	
+		// // for (vector<int>::iterator it = length_to.begin(); it != length_to.end(); ++it)
+		// // 	cout << *it << " ";
+		// //     return max(length_to[v] for v in V(G))	
+		// path = sorted;
 		return path;
+		
 	}
 	
 	vector<int> topologicalSort() {
@@ -193,6 +210,7 @@ int main (int argc, char const *argv[])
 		g.print();
 		// compute the longest path
 		vector<int> longestPath = g.longestPath();
+		cout << endl;
 		// compute the length of the longest path
 		
 		// output it
